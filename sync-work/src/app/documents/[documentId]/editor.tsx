@@ -15,6 +15,8 @@ import TextStyle from "@tiptap/extension-text-style";
 import FontFamily from "@tiptap/extension-font-family";
 import Highlight from "@tiptap/extension-highlight";
 import { Color } from "@tiptap/extension-color";
+import Link from "@tiptap/extension-link";
+import TextAlign from "@tiptap/extension-text-align";
 
 import { useEditorStore } from "@/store/use-editor-store";
 export const Editor = () => {
@@ -54,6 +56,11 @@ export const Editor = () => {
     },
     extensions: [
       StarterKit,
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
+        defaultProtocol: "https",
+      }),
       FontFamily,
       Highlight.configure({ multicolor: true }),
       Color,
@@ -69,6 +76,9 @@ export const Editor = () => {
       Image,
       ImageResize,
       Underline,
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
     ],
     content: "<p>Hello World! 🌎️</p>",
   });
