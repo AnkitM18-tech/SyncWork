@@ -1,4 +1,5 @@
 import { ConvexError, v } from "convex/values";
+import { paginationOptsValidator } from "convex/server";
 import { mutation, query } from "./_generated/server";
 
 export const create = mutation({
@@ -8,7 +9,6 @@ export const create = mutation({
   },
   handler: async (ctx, args) => {
     const user = await ctx.auth.getUserIdentity();
-
     if (!user) {
       throw new ConvexError("Unauthorized");
     }
@@ -24,7 +24,52 @@ export const create = mutation({
 });
 
 export const get = query({
-  handler: async (ctx) => {
-    return await ctx.db.query("documents").collect();
+  args: { paginationOpts: paginationOptsValidator },
+  handler: async (ctx, args) => {
+    return await ctx.db.query("documents").paginate(args.paginationOpts);
+  },
+});
+
+export const removeById = mutation({
+  args: { id: v.id("documents") },
+  handler: async (ctx, args) => {
+    const user = await ctx.auth.getUserIdentity();
+    if (!user) {
+      throw new ConvexError("Unauthorized");
+    }
+
+    const document = await ctx.db.get(args.id);
+    if (!document) {
+      throw new ConvexError("Document not found");
+    }
+
+    const isOwner = document.ownerId === user.subject;
+    if (!isOwner) {
+      throw new ConvexError("Don't have the permission to delete the document");
+    }
+
+    return await ctx.db.delete(args.id);
+  },
+});
+
+export const updateById = mutation({
+  args: { id: v.id("documents"), title: v.string() },
+  handler: async (ctx, args) => {
+    const user = await ctx.auth.getUserIdentity();
+    if (!user) {
+      throw new ConvexError("Unauthorized");
+    }
+
+    const document = await ctx.db.get(args.id);
+    if (!document) {
+      throw new ConvexError("Document not found");
+    }
+
+    const isOwner = document.ownerId === user.subject;
+    if (!isOwner) {
+      throw new ConvexError("Don't have the permission to update the document");
+    }
+
+    return await ctx.db.patch(args.id, { title: args.title });
   },
 });
