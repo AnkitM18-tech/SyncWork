@@ -50,7 +50,10 @@ export const RemoveDialog = ({ documentId, children }: RemoveDialogProps) => {
               setIsRemoving(true);
               remove({ id: documentId })
                 .catch(() => toast.error("Something Went Wrong"))
-                .then(() => toast.success("Document Deleted"))
+                .then(() => {
+                  toast.success("Document Deleted");
+                  window.history.go(-1);
+                })
                 .finally(() => setIsRemoving(false));
             }}
           >
