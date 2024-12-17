@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { ReactNode, useEffect, useMemo, useState } from "react";
@@ -23,10 +24,7 @@ export function Room({ children }: { children: ReactNode }) {
       try {
         const list = await getUsers();
         setUsers(list);
-      } catch (
-        // @typescript-eslint/no-unused-vars
-        error
-      ) {
+      } catch (error) {
         toast.error("Failed to fetch users");
       }
     },
