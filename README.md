@@ -1,1 +1,1 @@
-"# SyncWork - Realtime Collaboration Application" 
+# SyncWork - Realtime Collaboration Application
