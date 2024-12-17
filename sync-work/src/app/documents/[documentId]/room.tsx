@@ -14,7 +14,7 @@ import { Id } from "../../../../convex/_generated/dataModel";
 
 import { RIGHT_MARGIN_DEFAULT, LEFT_MARGIN_DEFAULT } from "@/constants/margins";
 
-type User = { id: string; name: string; avatar: string };
+type User = { id: string; name: string; avatar: string; color: string };
 export function Room({ children }: { children: ReactNode }) {
   const params = useParams();
   const [users, setUsers] = useState<User[]>([]);
