@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useSearchParam } from "@/hooks/use-search-param";
 import { Navbar } from "./navbar";
 import { TemplateGallery } from "./template-gallery";

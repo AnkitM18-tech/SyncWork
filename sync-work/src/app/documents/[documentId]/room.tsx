@@ -18,7 +18,7 @@ type User = { id: string; name: string; avatar: string; color: string };
 export function Room({ children }: { children: ReactNode }) {
   const params = useParams();
   const [users, setUsers] = useState<User[]>([]);
-
+  // @typescript-eslint/no-unused-vars
   const fetchUsers = useMemo(
     () => async () => {
       try {
